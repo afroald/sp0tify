@@ -1,8 +1,8 @@
-import 'fomantic-ui-css/semantic.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { AuthenticationProvider } from './AuthenticationContext';
 import Router from './Router';
+import { ChakraProvider } from '@chakra-ui/react';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
@@ -10,8 +10,10 @@ if (!rootElement) {
 }
 ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
-    <AuthenticationProvider>
-      <Router />
-    </AuthenticationProvider>
+    <ChakraProvider>
+      <AuthenticationProvider>
+        <Router />
+      </AuthenticationProvider>
+    </ChakraProvider>
   </React.StrictMode>,
 );

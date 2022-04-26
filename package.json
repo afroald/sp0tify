@@ -9,17 +9,19 @@
     "lint": "eslint \"src/**/*.ts\" --fix"
   },
   "dependencies": {
-    "fomantic-ui-css": "^2.8.8",
+    "@chakra-ui/react": "^1.8.8",
+    "@emotion/react": "^11",
+    "@emotion/styled": "^11",
+    "framer-motion": "^6",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "react-router-dom": "^6.3.0",
-    "semantic-ui-react": "^2.1.2"
+    "react-router-dom": "^6.3.0"
   },
   "devDependencies": {
-    "@types/react": "^18.0.6",
-    "@types/react-dom": "^18.0.2",
-    "@typescript-eslint/eslint-plugin": "^5.20.0",
-    "@typescript-eslint/parser": "^5.20.0",
+    "@types/react": "^18.0.7",
+    "@types/react-dom": "^18.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.21.0",
+    "@typescript-eslint/parser": "^5.21.0",
     "@vitejs/plugin-react": "^1.3.1",
     "eslint": "^8.14.0",
     "eslint-config-prettier": "^8.5.0",
