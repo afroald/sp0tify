@@ -1,7 +1,7 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
-  readonly VITE_FOO: string;
+  readonly VITE_SPOTIFY_CLIENT_ID: string;
 }
 
 interface ImportMeta {

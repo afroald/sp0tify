@@ -1,19 +1,21 @@
+import { ChakraProvider } from '@chakra-ui/react';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { AuthenticationProvider } from './AuthenticationContext';
-import Router from './Router';
-import { ChakraProvider } from '@chakra-ui/react';
+import { AuthorizationProvider } from './authorization/authorization-context';
+import { Router } from './router';
 
 const rootElement = document.getElementById('root');
+
 if (!rootElement) {
   throw new Error('kapot');
 }
+
 ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
     <ChakraProvider>
-      <AuthenticationProvider>
+      <AuthorizationProvider>
         <Router />
-      </AuthenticationProvider>
+      </AuthorizationProvider>
     </ChakraProvider>
   </React.StrictMode>,
 );
