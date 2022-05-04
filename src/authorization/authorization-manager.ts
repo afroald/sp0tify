@@ -14,7 +14,13 @@ export class AuthorizationManager {
   constructor(clientId: string, storage: Storage) {
     this.#clientId = clientId;
     this.#storage = storage;
-    this.#load();
+
+    try {
+      this.#load();
+    } catch (error) {
+      console.log('Failed to load authorization from storage');
+      console.error(error);
+    }
   }
 
   get isAuthorized() {
@@ -39,10 +45,13 @@ export class AuthorizationManager {
     );
   }
 
+  isProcessingAuthCode = false;
+
   /**
    * Checks the received authorization code after returning from an authorization request
    */
   async processAuthCode() {
+    this.isProcessingAuthCode = true;
     // Extract code and nonce from url
     const location = new URL(String(window.location));
     const authCode = location.searchParams.get('code');
@@ -50,25 +59,30 @@ export class AuthorizationManager {
     const nonce = location.searchParams.get('state');
 
     if (!nonce) {
+      this.isProcessingAuthCode = false;
       throw new Error('No nonce received');
     }
 
     // Check if nonce matches known auth request, return error if not
 
     if (!this.#request) {
+      this.isProcessingAuthCode = false;
       throw new Error('No authorization request in progress');
     }
 
     if (nonce !== this.#request.nonce.toBase64()) {
+      this.isProcessingAuthCode = false;
       throw new Error('Received nonce does not match known nonce');
     }
 
     // Nonce is correct, continue
     if (error) {
+      this.isProcessingAuthCode = false;
       throw new Error(`Authorization failed: ${error}`);
     }
 
     if (!authCode) {
+      this.isProcessingAuthCode = false;
       throw new Error('No authorization code received');
     }
 
@@ -76,6 +90,7 @@ export class AuthorizationManager {
     const accessToken = await this.#requestAccessToken(authCode);
     this.#accessToken = accessToken;
     this.#persist();
+    this.isProcessingAuthCode = false;
   }
 
   /**
@@ -129,7 +144,11 @@ export class AuthorizationManager {
     });
     const response = await request.json();
 
-    // TODO: handle errors
+    if (response.error) {
+      throw new Error(
+        `Failed to request access token: ${response.error}: ${response.error_description}`,
+      );
+    }
 
     return AccessToken.create({
       token: response.access_token,

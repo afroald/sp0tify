@@ -8,8 +8,8 @@ export const Router = () => (
     <Routes>
       <Route path="/login/callback" element={<LoginCallback />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/" element={<RequireAuth />}>
-        <Route index element={<Index />} />
+      <Route element={<RequireAuth />}>
+        <Route path="/" element={<Index />} />
       </Route>
     </Routes>
   </BrowserRouter>

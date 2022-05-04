@@ -1,1 +1,5 @@
-export const Index = () => <div>Index</div>;
+export const Index = () => (
+  <div>
+    <h1>Index</h1>
+  </div>
+);

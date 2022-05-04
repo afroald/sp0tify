@@ -1,7 +1,10 @@
 import { Button } from '@chakra-ui/react';
 import { useCallback, useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom';
-import { useAuthorizationContext } from './authorization/authorization-context';
+import { Link, Navigate } from 'react-router-dom';
+import {
+  AuthorizationState,
+  useAuthorizationContext,
+} from './authorization/authorization-context';
 
 export const Login = () => {
   const auth = useAuthorizationContext();
@@ -32,12 +35,16 @@ export const Login = () => {
 };
 
 export const LoginCallback = () => {
-  const auth = useAuthorizationContext();
+  const { manager, authorization } = useAuthorizationContext();
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   useEffect(() => {
-    auth.manager
+    if (manager.isProcessingAuthCode) {
+      return;
+    }
+
+    manager
       .processAuthCode()
       .catch((error) => {
         console.error(error);
@@ -46,13 +53,23 @@ export const LoginCallback = () => {
       .finally(() => {
         setIsLoading(false);
       });
-  }, []);
+  }, [manager]);
 
-  return auth.manager.isAuthorized ? (
-    <Navigate to="/" />
-  ) : (
+  if (errorMessage) {
+    return (
+      <div>
+        <pre>Error: {errorMessage}</pre>
+        <Link to="/login">Try again</Link>
+      </div>
+    );
+  }
+
+  if (authorization === AuthorizationState.Authorized) {
+    return <Navigate to="/" />;
+  }
+
+  return (
     <div>
-      {errorMessage ? <pre>Error: {errorMessage}</pre> : null}
       <Button colorScheme="green" isLoading={isLoading} loadingText="Checking">
         Login
       </Button>
