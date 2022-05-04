@@ -113,7 +113,7 @@ export class AuthorizationManager {
       throw new Error('Access token expired and no refresh token available');
     }
 
-    const newToken = await this.#requestAccessToken(accessToken.refreshToken);
+    const newToken = await this.#refreshToken(accessToken.refreshToken);
     this.#accessToken = newToken;
     this.#persist();
 
@@ -140,6 +140,31 @@ export class AuthorizationManager {
         redirect_uri: String(this.#redirectUrl),
         client_id: this.#clientId,
         code_verifier: String(this.#request.codeVerifier),
+      }),
+    });
+    const response = await request.json();
+
+    if (response.error) {
+      throw new Error(
+        `Failed to request access token: ${response.error}: ${response.error_description}`,
+      );
+    }
+
+    return AccessToken.create({
+      token: response.access_token,
+      scope: response.scope,
+      expiresIn: response.expires_in,
+      refreshToken: response.refresh_token,
+    });
+  }
+
+  async #refreshToken(refreshToken: string) {
+    const request = await fetch(TOKEN_ENDPOINT, {
+      method: 'POST',
+      body: new URLSearchParams({
+        grant_type: 'refresh_token',
+        refresh_token: refreshToken,
+        client_id: this.#clientId,
       }),
     });
     const response = await request.json();

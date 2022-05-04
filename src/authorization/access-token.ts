@@ -27,7 +27,7 @@ export class AccessToken {
   }
 
   get authorizationHeader() {
-    return `Bearer: ${this.token}`;
+    return `Bearer ${this.token}`;
   }
 
   toString() {

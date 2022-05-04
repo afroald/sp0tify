@@ -35,7 +35,7 @@ export const Login = () => {
 };
 
 export const LoginCallback = () => {
-  const { manager, authorization } = useAuthorizationContext();
+  const { manager, authorization, getAccessToken } = useAuthorizationContext();
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -46,6 +46,7 @@ export const LoginCallback = () => {
 
     manager
       .processAuthCode()
+      .then(() => getAccessToken())
       .catch((error) => {
         console.error(error);
         setErrorMessage(error.message);
@@ -53,7 +54,7 @@ export const LoginCallback = () => {
       .finally(() => {
         setIsLoading(false);
       });
-  }, [manager]);
+  }, [manager, getAccessToken]);
 
   if (errorMessage) {
     return (

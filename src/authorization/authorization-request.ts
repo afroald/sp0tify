@@ -1,7 +1,7 @@
 import { CodeVerifier } from './code-verifier';
 import { Nonce } from './nonce';
 
-const DEFAULT_SCOPE = 'user-read-private user-read-email';
+const DEFAULT_SCOPE = 'user-read-private user-read-email user-follow-read';
 
 export class AuthorizationRequest {
   readonly scope: string;
