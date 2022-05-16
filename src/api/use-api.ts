@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { AccessToken } from '../authorization/access-token';
 import { useAuthorizationContext } from '../authorization/authorization-context';
 
 export const useApi = <T>(
@@ -6,7 +7,7 @@ export const useApi = <T>(
   params: Record<string, string>,
 ): [T | null, boolean, Error | null] => {
   const { getAccessToken } = useAuthorizationContext();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState<Error | null>(null);
   const [result, setResult] = useState<T | null>(null);
 
@@ -19,6 +20,7 @@ export const useApi = <T>(
   }, [url, params]);
 
   useEffect(() => {
+    setIsPending(true);
     getAccessToken()
       .then((token) => {
         return fetch(String(fullUrl), {
@@ -35,9 +37,21 @@ export const useApi = <T>(
         setError(error);
       })
       .finally(() => {
-        setIsLoading(false);
+        setIsPending(false);
       });
   }, [getAccessToken, fullUrl]);
 
-  return [result, isLoading, error];
+  return [result, isPending, error];
 };
+
+export const apiFetch = <T>(
+  token: AccessToken,
+  url: URL,
+  signal?: AbortSignal,
+): Promise<T> =>
+  fetch(String(url), {
+    headers: new Headers({
+      Authorization: String(token),
+    }),
+    signal,
+  }).then((response) => response.json());

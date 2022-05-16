@@ -1,7 +1,34 @@
+import { Deferred } from '../deferred';
 import { AccessToken } from './access-token';
 import { AuthorizationRequest } from './authorization-request';
 
 const TOKEN_ENDPOINT = `https://accounts.spotify.com/api/token`;
+
+class TaskRunner {
+  #tasks = new Map<string, Deferred<any>>(); // eslint-disable-line @typescript-eslint/no-explicit-any
+
+  run<T>(taskId: string, promiseFn: () => Promise<T>) {
+    if (this.#tasks.has(taskId)) {
+      return (this.#tasks.get(taskId) as Deferred<T>).promise;
+    }
+
+    const deferred = new Deferred<T>();
+    this.#tasks.set(taskId, deferred);
+
+    promiseFn()
+      .then((result: T) => {
+        deferred.resolve(result);
+      })
+      .catch((error) => {
+        deferred.reject(error);
+      })
+      .finally(() => {
+        this.#tasks.delete(taskId);
+      });
+
+    return deferred.promise;
+  }
+}
 
 export class AuthorizationManager {
   static STORAGE_KEY = 'sp0tify-authorization';
@@ -10,6 +37,8 @@ export class AuthorizationManager {
   #storage: Storage;
   #request: AuthorizationRequest | null = null;
   #accessToken: AccessToken | null = null;
+
+  #taskRunner = new TaskRunner();
 
   constructor(clientId: string, storage: Storage) {
     this.#clientId = clientId;
@@ -50,74 +79,69 @@ export class AuthorizationManager {
   /**
    * Checks the received authorization code after returning from an authorization request
    */
-  async processAuthCode() {
-    this.isProcessingAuthCode = true;
-    // Extract code and nonce from url
-    const location = new URL(String(window.location));
-    const authCode = location.searchParams.get('code');
-    const error = location.searchParams.get('error');
-    const nonce = location.searchParams.get('state');
+  processAuthCode() {
+    return this.#taskRunner.run('process-auth-code', async () => {
+      // Extract code and nonce from url
+      const location = new URL(String(window.location));
+      const authCode = location.searchParams.get('code');
+      const error = location.searchParams.get('error');
+      const nonce = location.searchParams.get('state');
 
-    if (!nonce) {
-      this.isProcessingAuthCode = false;
-      throw new Error('No nonce received');
-    }
+      if (!nonce) {
+        throw new Error('No nonce received');
+      }
 
-    // Check if nonce matches known auth request, return error if not
+      // Check if nonce matches known auth request, return error if not
 
-    if (!this.#request) {
-      this.isProcessingAuthCode = false;
-      throw new Error('No authorization request in progress');
-    }
+      if (!this.#request) {
+        throw new Error('No authorization request in progress');
+      }
 
-    if (nonce !== this.#request.nonce.toBase64()) {
-      this.isProcessingAuthCode = false;
-      throw new Error('Received nonce does not match known nonce');
-    }
+      if (nonce !== this.#request.nonce.toBase64()) {
+        throw new Error('Received nonce does not match known nonce');
+      }
 
-    // Nonce is correct, continue
-    if (error) {
-      this.isProcessingAuthCode = false;
-      throw new Error(`Authorization failed: ${error}`);
-    }
+      // Nonce is correct, continue
+      if (error) {
+        throw new Error(`Authorization failed: ${error}`);
+      }
 
-    if (!authCode) {
-      this.isProcessingAuthCode = false;
-      throw new Error('No authorization code received');
-    }
+      if (!authCode) {
+        throw new Error('No authorization code received');
+      }
 
-    // Get token
-    const accessToken = await this.#requestAccessToken(authCode);
-    this.#accessToken = accessToken;
-    this.#persist();
-    this.isProcessingAuthCode = false;
+      // Get token
+      const accessToken = await this.#requestAccessToken(authCode);
+      this.#accessToken = accessToken;
+      this.#persist();
+    });
   }
 
   /**
    * Makes sure we have a valid access token and returns it
    */
-  async getAccessToken() {
-    const accessToken = this.#accessToken;
+  getAccessToken() {
+    return this.#taskRunner.run('get-access-token', async () => {
+      const accessToken = this.#accessToken;
 
-    if (!accessToken) {
-      throw new Error(
-        'No access token available, restart authorization process',
-      );
-    }
+      if (!accessToken) {
+        throw new Error(
+          'No access token available, restart authorization process',
+        );
+      }
 
-    if (!accessToken.isExpired) {
-      return accessToken;
-    }
+      if (!accessToken.isExpired) {
+        return accessToken;
+      }
 
-    if (!accessToken.refreshToken) {
-      throw new Error('Access token expired and no refresh token available');
-    }
+      if (!accessToken.refreshToken) {
+        throw new Error('Access token expired and no refresh token available');
+      }
 
-    const newToken = await this.#refreshToken(accessToken.refreshToken);
-    this.#accessToken = newToken;
-    this.#persist();
-
-    return newToken;
+      const newToken = await this.#refreshAccessToken(accessToken.refreshToken);
+      this.#accessToken = newToken;
+      this.#persist();
+    });
   }
 
   get #redirectUrl() {
@@ -158,7 +182,7 @@ export class AuthorizationManager {
     });
   }
 
-  async #refreshToken(refreshToken: string) {
+  async #refreshAccessToken(refreshToken: string) {
     const request = await fetch(TOKEN_ENDPOINT, {
       method: 'POST',
       body: new URLSearchParams({

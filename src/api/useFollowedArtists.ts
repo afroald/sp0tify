@@ -1,6 +1,9 @@
-import { useApi } from './use-api';
+import { useEffect, useState } from 'react';
+import { AccessToken } from '../authorization/access-token';
+import { useAuthorizationContext } from '../authorization/authorization-context';
+import { apiFetch } from './use-api';
 
-interface Artist {
+export interface Artist {
   external_urls: Record<string, string>;
   followers: {
     href: string;
@@ -33,18 +36,61 @@ interface ApiFollowingResponse {
   };
 }
 
+const fetchFollowedArtists = async ({
+  token,
+  after,
+}: {
+  token: AccessToken;
+  after?: string;
+}): Promise<Artist[]> => {
+  const url = new URL('https://api.spotify.com/v1/me/following');
+  url.searchParams.append('type', 'artist');
+  url.searchParams.append('limit', '50');
+
+  if (after) {
+    url.searchParams.append('after', after);
+  }
+
+  const { artists } = await apiFetch<ApiFollowingResponse>(token, url);
+
+  return [
+    ...artists.items,
+    ...(artists.cursors.after
+      ? await fetchFollowedArtists({
+          token,
+          after: artists.cursors.after,
+        })
+      : []),
+  ];
+};
+
 export const useFollowedArtists = (): [
   Artist[] | null,
   boolean,
   Error | null,
 ] => {
-  const [result, isLoading, error] = useApi<ApiFollowingResponse>(
-    'https://api.spotify.com/v1/me/following',
-    {
-      type: 'artist',
-      limit: '50',
-    },
-  );
+  const { getAccessToken } = useAuthorizationContext();
+  const [isPending, setIsPending] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
+  const [result, setResult] = useState<Artist[] | null>(null);
 
-  return [result ? result.artists.items : null, isLoading, error];
+  useEffect(() => {
+    setIsPending(true);
+    getAccessToken()
+      .then((token) => {
+        console.log(token);
+        return fetchFollowedArtists({ token });
+      })
+      .then((artists) => {
+        setResult(artists);
+      })
+      .catch((error) => {
+        setError(error);
+      })
+      .finally(() => {
+        setIsPending(false);
+      });
+  }, [getAccessToken]);
+
+  return [result, isPending, error];
 };

@@ -18,10 +18,8 @@ interface AuthorizationContextInterface {
   getAccessToken: () => Promise<AccessToken>;
 }
 
-/* eslint-disable @typescript-eslint/no-empty-function */
 const AuthorizationContext =
   createContext<AuthorizationContextInterface | null>(null);
-/* eslint-enable */
 
 export const useAuthorizationContext = () => {
   const context = useContext(AuthorizationContext);
@@ -35,7 +33,6 @@ export const useAuthorizationContext = () => {
 
 export enum AuthorizationState {
   Unknown,
-  Checking,
   Authorized,
   NotAuthorized,
 }
@@ -58,23 +55,23 @@ export const AuthorizationProvider = ({
     AuthorizationState.Unknown,
   );
 
-  const getAccessToken = useCallback(async () => {
-    try {
-      if (authorization !== AuthorizationState.Authorized) {
-        setAuthorization(AuthorizationState.Checking);
-      }
-
-      const token = await manager.getAccessToken();
-      setAuthorization(AuthorizationState.Authorized);
-      return token;
-    } catch (error) {
-      console.log(
-        'Removing authorization because no access token is available',
-      );
-      setAuthorization(AuthorizationState.NotAuthorized);
-      throw error;
-    }
-  }, [manager, authorization]);
+  const getAccessToken = useCallback(
+    () =>
+      manager
+        .getAccessToken()
+        .then((token) => {
+          setAuthorization(AuthorizationState.Authorized);
+          return token;
+        })
+        .catch((error) => {
+          console.log(
+            'Removing authorization because no access token is available',
+          );
+          setAuthorization(AuthorizationState.NotAuthorized);
+          throw error;
+        }),
+    [manager],
+  );
 
   const value = useMemo(
     () => ({

@@ -5,7 +5,7 @@ import { ArtistReleases } from './artist-releases';
 
 export const ArtistBrowser = () => {
   const { artistId } = useParams();
-  const [artists, isLoading] = useFollowedArtists();
+  const [artists, isPending] = useFollowedArtists();
 
   return (
     <Flex height="100%" alignItems="stretch">
@@ -16,7 +16,7 @@ export const ArtistBrowser = () => {
         padding={23}
         borderRight="1px solid #404040"
       >
-        {isLoading ? (
+        {isPending ? (
           <Spinner size="md" />
         ) : (
           <ul>

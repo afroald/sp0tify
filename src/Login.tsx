@@ -40,10 +40,6 @@ export const LoginCallback = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   useEffect(() => {
-    if (manager.isProcessingAuthCode) {
-      return;
-    }
-
     manager
       .processAuthCode()
       .then(() => getAccessToken())
