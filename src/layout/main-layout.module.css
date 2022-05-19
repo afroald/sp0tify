@@ -1,0 +1,15 @@
+.main-layout {
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh;
+}
+
+.side-bar {
+  width: 300px;
+  padding-top: 24px;
+}
+
+.content {
+  flex-grow: 1;
+  background-color: #121212;
+}

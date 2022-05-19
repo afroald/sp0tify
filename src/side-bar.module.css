@@ -1,0 +1,32 @@
+.logo {
+  padding: 0 24px;
+  margin-bottom: 18px;
+}
+
+.separator {
+  padding: 0 24px;
+  color: #282828;
+}
+
+.separator hr {
+  height: 1px;
+  border: none;
+  background-color: #282828;
+}
+
+.nav {
+  padding: 0 8px;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 16px;
+  opacity: .7;
+}
+
+.nav-link:hover,
+.nav-link-active {
+  opacity: 1;
+}

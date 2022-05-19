@@ -7,7 +7,7 @@ const TOKEN_ENDPOINT = `https://accounts.spotify.com/api/token`;
 class TaskRunner {
   #tasks = new Map<string, Deferred<any>>(); // eslint-disable-line @typescript-eslint/no-explicit-any
 
-  run<T>(taskId: string, promiseFn: () => Promise<T>) {
+  run<T>(taskId: string, promiseFn: () => Promise<T>): Promise<T> {
     if (this.#tasks.has(taskId)) {
       return (this.#tasks.get(taskId) as Deferred<T>).promise;
     }
@@ -141,6 +141,8 @@ export class AuthorizationManager {
       const newToken = await this.#refreshAccessToken(accessToken.refreshToken);
       this.#accessToken = newToken;
       this.#persist();
+
+      return newToken;
     });
   }
 

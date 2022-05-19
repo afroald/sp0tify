@@ -1,0 +1,26 @@
+.artist-link {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 56px;
+  padding: 0 16px;
+  border-radius: 4px;
+}
+
+.artist-link:hover {
+  background-color: rgba(255, 255, 255, .1);
+}
+
+.artist-link-selected,
+.artist-link-selected:hover {
+  background-color: rgba(255, 255, 255, .3);
+}
+
+.artist-image {
+  display: block;
+  margin-right: 18px;
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  object-fit: cover;
+}

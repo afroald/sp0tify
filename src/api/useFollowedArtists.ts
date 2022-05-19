@@ -77,10 +77,7 @@ export const useFollowedArtists = (): [
   useEffect(() => {
     setIsPending(true);
     getAccessToken()
-      .then((token) => {
-        console.log(token);
-        return fetchFollowedArtists({ token });
-      })
+      .then((token) => fetchFollowedArtists({ token }))
       .then((artists) => {
         setResult(artists);
       })

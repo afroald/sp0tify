@@ -1,6 +1,7 @@
-import { Box, Flex, Spinner } from '@chakra-ui/react';
-import { Link, useParams } from 'react-router-dom';
-import { useFollowedArtists } from './api/useFollowedArtists';
+import { Box, Center, Flex, Spinner } from '@chakra-ui/react';
+import { useParams } from 'react-router-dom';
+import { useFollowedArtists } from '../api/useFollowedArtists';
+import { ArtistList } from './artist-list';
 import { ArtistReleases } from './artist-releases';
 
 export const ArtistBrowser = () => {
@@ -10,24 +11,18 @@ export const ArtistBrowser = () => {
   return (
     <Flex height="100%" alignItems="stretch">
       <Box
-        width={300}
+        width={400}
         height="100vh"
         overflow="scroll"
         padding={23}
         borderRight="1px solid #404040"
       >
         {isPending ? (
-          <Spinner size="md" />
+          <Center>
+            <Spinner size="md" />
+          </Center>
         ) : (
-          <ul>
-            {(artists ?? [])
-              .sort((a, b) => a.name.localeCompare(b.name))
-              .map((artist) => (
-                <li key={artist.id}>
-                  <Link to={`/artists/${artist.id}`}>{artist.name}</Link>
-                </li>
-              ))}
-          </ul>
+          <ArtistList artists={artists ?? []} selectedArtistId={artistId} />
         )}
       </Box>
       <Box padding={34}>
