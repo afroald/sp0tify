@@ -1,12 +1,19 @@
 import { Link, List, ListItem } from '@chakra-ui/react';
+import classnames from 'classnames';
 import { Link as RouterLink } from 'react-router-dom';
-import { Artist } from '../api/useFollowedArtists';
 import { selectImage } from '../select-image';
 import classes from './artist-list.module.css';
-import classnames from 'classnames';
 
 interface ArtistListProps {
-  artists: Artist[];
+  artists: {
+    id: string;
+    name: string;
+    images: {
+      url: string;
+      width: number;
+      height: number;
+    }[];
+  }[];
   selectedArtistId?: string | null;
 }
 

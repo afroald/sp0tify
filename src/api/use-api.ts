@@ -2,6 +2,16 @@ import { useEffect, useMemo, useState } from 'react';
 import { AccessToken } from '../authorization/access-token';
 import { useAuthorizationContext } from '../authorization/authorization-context';
 
+export interface PaginatedResponse<T> {
+  href: string;
+  items: T[];
+  limit: number;
+  next: string;
+  offset: number;
+  previous: string;
+  total: number;
+}
+
 export const useApi = <T>(
   url: string,
   params: Record<string, string>,

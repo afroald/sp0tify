@@ -1,8 +1,8 @@
 import { Box, Center, Flex, Spinner } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
-import { useFollowedArtists } from '../api/useFollowedArtists';
+import { useFollowedArtists } from '../api/artist';
 import { ArtistList } from './artist-list';
-import { ArtistReleases } from './artist-releases';
+import { ArtistAlbums } from './artist-albums';
 
 export const ArtistBrowser = () => {
   const { artistId } = useParams();
@@ -26,7 +26,7 @@ export const ArtistBrowser = () => {
         )}
       </Box>
       <Box padding={34}>
-        {artistId ? <ArtistReleases artistId={artistId} /> : null}
+        {artistId ? <ArtistAlbums artistId={artistId} /> : null}
       </Box>
     </Flex>
   );
