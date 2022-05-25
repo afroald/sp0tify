@@ -57,11 +57,13 @@ export const useApi = <T>(
 export const apiFetch = <T>(
   token: AccessToken,
   url: URL,
+  body?: string,
   signal?: AbortSignal,
 ): Promise<T> =>
   fetch(String(url), {
     headers: new Headers({
       Authorization: String(token),
     }),
+    body,
     signal,
   }).then((response) => response.json());

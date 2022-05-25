@@ -1,0 +1,13 @@
+.playback-bar {
+  display: flex;
+  height: 91px;
+  background-color: #181818;
+  border-top: 1px solid #282828;
+}
+
+.center {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

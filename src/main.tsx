@@ -2,6 +2,7 @@ import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { AuthorizationProvider } from './authorization/authorization-context';
+import { PlaybackProvider } from './playback/playback-context';
 import { Router } from './router';
 
 const rootElement = document.getElementById('root');
@@ -25,7 +26,9 @@ ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
     <ChakraProvider theme={theme}>
       <AuthorizationProvider>
-        <Router />
+        <PlaybackProvider>
+          <Router />
+        </PlaybackProvider>
       </AuthorizationProvider>
     </ChakraProvider>
   </React.StrictMode>,

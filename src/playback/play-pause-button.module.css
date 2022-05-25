@@ -1,0 +1,14 @@
+.play-pause-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 16px;
+  background-color: #fff;
+  transition: transform 33ms cubic-bezier(.3,0,.7,1);
+}
+
+.play-pause-button:hover {
+  transform: scale(1.06);
+}

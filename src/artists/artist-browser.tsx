@@ -12,7 +12,6 @@ export const ArtistBrowser = () => {
     <Flex height="100%" alignItems="stretch">
       <Box
         width={400}
-        height="100vh"
         overflow="scroll"
         padding={23}
         borderRight="1px solid #404040"
@@ -25,7 +24,7 @@ export const ArtistBrowser = () => {
           <ArtistList artists={artists ?? []} selectedArtistId={artistId} />
         )}
       </Box>
-      <Box padding={34}>
+      <Box padding={34} flexGrow={1}>
         {artistId ? <ArtistAlbums artistId={artistId} /> : null}
       </Box>
     </Flex>

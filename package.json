@@ -9,7 +9,7 @@
     "lint": "eslint \"src/**/*.ts\" --fix"
   },
   "dependencies": {
-    "@chakra-ui/react": "^2.0.0",
+    "@chakra-ui/react": "^2.0.2",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
     "base64-js": "^1.5.1",
@@ -17,20 +17,21 @@
     "framer-motion": "^6.3.3",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
-    "react-router-dom": "^6.3.0"
+    "react-router-dom": "^6.3.0",
+    "spotify-web-playback-ts": "^0.0.2"
   },
   "devDependencies": {
     "@types/react": "^18.0.9",
-    "@types/react-dom": "^18.0.4",
-    "@typescript-eslint/eslint-plugin": "^5.23.0",
-    "@typescript-eslint/parser": "^5.23.0",
+    "@types/react-dom": "^18.0.5",
+    "@typescript-eslint/eslint-plugin": "^5.26.0",
+    "@typescript-eslint/parser": "^5.26.0",
     "@vitejs/plugin-react": "^1.3.2",
-    "eslint": "^8.15.0",
+    "eslint": "^8.16.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react-hooks": "^4.5.0",
     "prettier": "^2.6.2",
-    "typescript": "^4.6.4",
+    "typescript": "^4.7.2",
     "vite": "^2.9.9"
   },
   "packageManager": "yarn@3.2.1"

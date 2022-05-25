@@ -1,0 +1,17 @@
+.header {
+  display: flex;
+  flex-direction: row;
+}
+
+.tracks {
+  width: 100%;
+}
+
+.tracks thead {
+  color: #b3b3b3;
+  text-transform: uppercase;
+}
+
+.tracks thead svg {
+  fill: currentColor;
+}
