@@ -3,6 +3,10 @@ import { AccessToken } from '../authorization/access-token';
 import { useAuthorizationContext } from '../authorization/authorization-context';
 import { apiFetch } from './use-api';
 
+export type AlbumGroup = 'album' | 'single' | 'appears_on' | 'compilation';
+export type AlbumType = 'album' | 'single' | 'compilation';
+export type ReleaseDatePrecision = 'year' | 'month' | 'day';
+
 interface ApiAlbumTracksResponse {
   href: string;
   items: {

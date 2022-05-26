@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { AccessToken } from '../authorization/access-token';
 import { useAuthorizationContext } from '../authorization/authorization-context';
+import { AlbumGroup, AlbumType, ReleaseDatePrecision } from './album';
+import { ImageCollection } from './image';
 import { apiFetch } from './use-api';
 
 interface ApiArtistReponse {
@@ -12,11 +14,7 @@ interface ApiArtistReponse {
   genres: string[];
   href: string;
   id: string;
-  images: {
-    url: string;
-    width: number;
-    height: number;
-  }[];
+  images: ImageCollection;
   name: string;
   popularity: number;
   type: 'artist';
@@ -74,11 +72,7 @@ interface ApiFollowingResponse {
       genres: string[];
       href: string;
       id: string;
-      images: {
-        url: string;
-        width: number;
-        height: number;
-      }[];
+      images: ImageCollection;
       name: string;
       popularity: number;
       type: 'artist';
@@ -154,8 +148,8 @@ export const useFollowedArtists = (): [
 interface ApiArtistsAlbumsResponse {
   href: string;
   items: {
-    album_group: 'album' | 'single' | 'appears_on' | 'compilation';
-    album_type: 'album' | 'single' | 'compilation';
+    album_group: AlbumGroup;
+    album_type: AlbumType;
     artists: {
       external_urls: Record<string, string>;
       href: string;
@@ -168,14 +162,10 @@ interface ApiArtistsAlbumsResponse {
     external_urls: Record<string, string>;
     href: string;
     id: string;
-    images: {
-      url: string;
-      width: number;
-      height: number;
-    }[];
+    images: ImageCollection;
     name: string;
     release_date: string;
-    release_date_precision: 'year' | 'month' | 'day';
+    release_date_precision: ReleaseDatePrecision;
     total_tracks: number;
     type: string;
     uri: string;
@@ -195,7 +185,7 @@ const fetchArtistsAlbums = async ({
 }: {
   token: AccessToken;
   artistId: string;
-  groups?: ('album' | 'single' | 'appears_on' | 'compilation')[];
+  groups?: AlbumGroup[];
   offset?: number;
 }): Promise<ApiArtistsAlbumsResponse['items']> => {
   const url = new URL(`https://api.spotify.com/v1/artists/${artistId}/albums`);

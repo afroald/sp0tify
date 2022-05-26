@@ -91,8 +91,6 @@ export const Album = ({ album }: AlbumProps) => {
                       onClick={() => {
                         const index = tracks.indexOf(track);
                         const tracksToPlay = tracks.slice(index);
-                        const uris = tracksToPlay.map((track) => track.uri);
-                        console.log(uris);
                         play(tracksToPlay.map((track) => track.uri));
                       }}
                     >

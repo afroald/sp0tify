@@ -1,8 +1,4 @@
-type ImageCollection = {
-  width: number;
-  height: number;
-  url: string;
-}[];
+import { ImageCollection } from './api/image';
 
 type SelectImageCriteria =
   | {

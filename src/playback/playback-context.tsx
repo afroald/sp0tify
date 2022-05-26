@@ -108,6 +108,39 @@ export const PlaybackProvider = ({ children }: PlaybackProviderProps) => {
     };
   }, [playerRef]);
 
+  useEffect(() => {
+    if (!deviceId) {
+      return;
+    }
+
+    const timeout = 1000;
+    let timeoutId: number;
+
+    const update = () => {
+      const player = playerRef.current;
+
+      if (!player) {
+        timeoutId = setTimeout(update, timeout);
+        return;
+      }
+
+      player
+        .getCurrentState()
+        .then((state) => {
+          setPlayerState(state);
+        })
+        .finally(() => {
+          timeoutId = setTimeout(update, timeout);
+        });
+    };
+
+    update();
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [deviceId]);
+
   const play = useCallback(
     (uris: string[]) => {
       if (!deviceId) {
