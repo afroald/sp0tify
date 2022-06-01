@@ -1,0 +1,56 @@
+.track-list {
+  list-style-type: none;
+}
+
+.row {
+  display: grid;
+  grid-gap: 16px;
+  grid-template-columns: [index] 16px [first] 4fr [last] minmax(120px,1fr);
+  height: 56px;
+  padding: 0 16px;
+  border-radius: 4px;
+}
+
+.row:hover {
+  background-color: rgba(255,255,255,.1);
+}
+
+.row-selected,
+.row-selected:hover {
+  background-color: rgba(255,255,255,.3);
+}
+
+.column-1 {
+  display: flex;
+  align-items: center;
+  justify-self: end;
+}
+
+.column-2 {
+  justify-self: start;
+  display: flex;
+  align-items: center;
+}
+
+.track-name-and-artists {
+  display: grid;
+  grid-template: "title title" "badges subtitle"/auto 1fr;
+  column-gap: 8px;
+  align-items: center;
+  padding-right: 8px;
+}
+
+.track-name {
+  grid-area: title;
+  justify-self: start;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.artists {
+  grid-area: subtitle;
+  grid-column-start: badges;
+  font-size: 14px;
+  line-height: 1;
+  color: rgb(167, 167, 167);
+}

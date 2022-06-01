@@ -3,6 +3,7 @@ import { useAlbumTracks } from '../api/album';
 import { selectImage } from '../select-image';
 import classes from './album.module.css';
 import { usePlaybackContext } from '../playback/playback-context';
+import { TrackList } from './track-list';
 
 const timeIcon = (
   <svg role="img" height="16" width="16" viewBox="0 0 16 16">
@@ -31,11 +32,6 @@ export const Album = ({ album }: AlbumProps) => {
   const releaseDate = new Date(album.release_date);
   const [tracks, isPending, error] = useAlbumTracks({ albumId: album.id });
 
-  const tracksRange = [];
-  for (let i = 1; i <= album.total_tracks; i++) {
-    tracksRange.push(i);
-  }
-
   return (
     <section>
       <header className={classes['header']}>
@@ -62,7 +58,9 @@ export const Album = ({ album }: AlbumProps) => {
         </div>
       </header>
 
-      <table className={classes['tracks']}>
+      <TrackList tracks={tracks ?? []} total_tracks={album.total_tracks} />
+
+      {/* <table className={classes['tracks']}>
         <thead>
           <tr>
             <td>#</td>
@@ -102,7 +100,7 @@ export const Album = ({ album }: AlbumProps) => {
                 </tr>
               ))}
         </tbody>
-      </table>
+      </table> */}
     </section>
   );
 };
