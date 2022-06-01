@@ -1,6 +1,7 @@
 .now-playing-bar {
   display: flex;
-  height: 91px;
+  align-items: center;
+  height: 90px;
   padding: 0 16px;
   background-color: #181818;
   border-top: 1px solid #282828;
@@ -21,4 +22,32 @@
   flex-direction: row;
   justify-content: center;
   gap: 16px;
+}
+
+.now-playing {
+  flex-grow: 1;
+  display: flex;
+}
+
+.now-playing-cover-art {
+  display: block;
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+}
+
+.now-playing-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 14px;
+}
+
+.now-playing-track {
+  font-size: 14px;
+}
+
+.now-playing-artists {
+  font-size: 11px;
+  color: rgb(167, 167, 167);
 }

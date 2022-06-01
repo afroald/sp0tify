@@ -5,6 +5,7 @@ import classes from './now-playing-bar.module.css';
 import { PlaybackBar } from './playback-bar/playback-bar';
 import { usePlaybackContext } from './playback-context';
 import { useTrack } from '../api/track';
+import { selectImage } from '../select-image';
 
 export const NowPlayingBar = () => {
   const { state, togglePlay } = usePlaybackContext();
@@ -14,7 +15,31 @@ export const NowPlayingBar = () => {
 
   return (
     <div className={classes['now-playing-bar']}>
-      <div style={{ flexGrow: 1 }}></div>
+      <div style={{ flexGrow: 1 }} className={classes['now-playing']}>
+        {currentTrack ? (
+          <>
+            <div>
+              <img
+                className={classes['now-playing-cover-art']}
+                width="56"
+                height="56"
+                alt=""
+                src={
+                  selectImage(currentTrack.album.images, { width: 56 * 2 })?.url
+                }
+              />
+            </div>
+            <div className={classes['now-playing-info']}>
+              <div className={classes['now-playing-track']}>
+                {currentTrack.name}
+              </div>
+              <div className={classes['now-playing-artists']}>
+                {currentTrack.artists.map((artist) => artist.name).join(', ')}
+              </div>
+            </div>
+          </>
+        ) : null}
+      </div>
       <div className={classes['center']}>
         <div className={classes['control-buttons']}>
           <SkipBackButton />
