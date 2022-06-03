@@ -1517,6 +1517,118 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@objectiv/plugin-http-context@npm:^0.0.19":
+  version: 0.0.19
+  resolution: "@objectiv/plugin-http-context@npm:0.0.19"
+  peerDependencies:
+    "@objectiv/tracker-core": ^0.0.19
+  checksum: fa2162e75be7b6326940c0143150eba741ce14196d9e1f4c708c95ab4158618f4fb251600c7c0db7aa51901a70dbae587aedc312fcbeb89ce4e270dccc746385
+  languageName: node
+  linkType: hard
+
+"@objectiv/plugin-path-context-from-url@npm:^0.0.19":
+  version: 0.0.19
+  resolution: "@objectiv/plugin-path-context-from-url@npm:0.0.19"
+  peerDependencies:
+    "@objectiv/tracker-core": ^0.0.19
+  checksum: b90b6cafe5c4acedb55dd6d76395d814873a9edae0514e8c7173143b56c81b464b04e12f4d77756571ecd5b3cc9ec28f5f78e7b7c21f132e77fe4f55baa3a516
+  languageName: node
+  linkType: hard
+
+"@objectiv/plugin-root-location-context-from-url@npm:^0.0.19":
+  version: 0.0.19
+  resolution: "@objectiv/plugin-root-location-context-from-url@npm:0.0.19"
+  peerDependencies:
+    "@objectiv/tracker-core": ^0.0.19
+  checksum: 62da4cb46a62d29725206dd9fdc72f8a4a4145da98c9bd561d4494c8d28b7b72db8e6b6b25fdebba4edde90bbed7f14113ddc6b835f6216ee2807b404e6ebc26
+  languageName: node
+  linkType: hard
+
+"@objectiv/queue-local-storage@npm:^0.0.19":
+  version: 0.0.19
+  resolution: "@objectiv/queue-local-storage@npm:0.0.19"
+  dependencies:
+    "@objectiv/tracker-core": ~0.0.19
+  checksum: 47c353a3b60ad826f36f3e83242c6dbf0f1fb432beafc5dd1723cd55ed93c760e31bc5414830d81ce3d5a6df0bb5558556c65d80c71e8b75752a02602331d9b6
+  languageName: node
+  linkType: hard
+
+"@objectiv/schema@npm:^0.0.19":
+  version: 0.0.19
+  resolution: "@objectiv/schema@npm:0.0.19"
+  checksum: 8f86372d4ad0db204450af7f8a5db2b79744fd44a38d20a0f501fa30fd1e6d8f4f2377e0eab66d80e4842cf4c9eb8370717c136d4f5084919887b7e801705ba1
+  languageName: node
+  linkType: hard
+
+"@objectiv/tracker-core@npm:~0.0.19":
+  version: 0.0.19
+  resolution: "@objectiv/tracker-core@npm:0.0.19"
+  dependencies:
+    "@objectiv/schema": ^0.0.19
+    uuid: ^8.3.2
+  checksum: e4b7ae367b4c7186371814857ee18a5c754f4f7d6c90c7556f0432fb01d7665ad3ed360a75d70f584bc29d6d411fef635d2ef2adee9040a22f69f296bfa20af1
+  languageName: node
+  linkType: hard
+
+"@objectiv/tracker-react-core@npm:~0.0.19":
+  version: 0.0.19
+  resolution: "@objectiv/tracker-react-core@npm:0.0.19"
+  dependencies:
+    "@objectiv/tracker-core": ~0.0.19
+    fast-deep-equal: ^3.1.3
+  peerDependencies:
+    react: ">=16.8"
+    react-dom: ">=16.8"
+  checksum: 5958df5b3be1909cbde5da396f3be4b7a50bfea2ac42e4057c6c9d9088f88fc4de9b3ee506d3b158c7ea3f02e3e1ab4d0f02259a85ab359bbaf2d22631a92ab5
+  languageName: node
+  linkType: hard
+
+"@objectiv/tracker-react@npm:^0.0.19":
+  version: 0.0.19
+  resolution: "@objectiv/tracker-react@npm:0.0.19"
+  dependencies:
+    "@objectiv/plugin-http-context": ^0.0.19
+    "@objectiv/plugin-path-context-from-url": ^0.0.19
+    "@objectiv/plugin-root-location-context-from-url": ^0.0.19
+    "@objectiv/queue-local-storage": ^0.0.19
+    "@objectiv/tracker-core": ~0.0.19
+    "@objectiv/tracker-react-core": ~0.0.19
+    "@objectiv/transport-fetch": ^0.0.19
+    "@objectiv/transport-xhr": ^0.0.19
+  peerDependencies:
+    react: ">=16.8"
+    react-dom: ">=16.8"
+  checksum: d1f9a1c9881c8b307950f51df8aa57717a6e777fa5208a8526a4cb57bc832c51048387e712423fc03e96a0eff487ba4bac947948f4dcfd60eec97b6a136f753c
+  languageName: node
+  linkType: hard
+
+"@objectiv/transport-debug@npm:^0.0.19":
+  version: 0.0.19
+  resolution: "@objectiv/transport-debug@npm:0.0.19"
+  dependencies:
+    "@objectiv/tracker-core": ~0.0.19
+  checksum: 88078fdc77a151ab1a255c0e4fd08e57f2fa008201dbf9b9c24c82316aeeca0adcde1446283e7515395262687d4e4c1622e1675816e3f41e3a511bbbebf10221
+  languageName: node
+  linkType: hard
+
+"@objectiv/transport-fetch@npm:^0.0.19":
+  version: 0.0.19
+  resolution: "@objectiv/transport-fetch@npm:0.0.19"
+  dependencies:
+    "@objectiv/tracker-core": ~0.0.19
+  checksum: 25dd98ced6aba7e96480408b076c9e5a4e137c7c9882d07b9fbe9c610077e642983d94d3c764bd1367cc94669c0fdb2dcac9c7e65eec369746e27e5426d42172
+  languageName: node
+  linkType: hard
+
+"@objectiv/transport-xhr@npm:^0.0.19":
+  version: 0.0.19
+  resolution: "@objectiv/transport-xhr@npm:0.0.19"
+  dependencies:
+    "@objectiv/tracker-core": ~0.0.19
+  checksum: 3ec3aa240bd1289064b7e7b9b62e686628415a8c29ce2bc0e2048e99edc4118a2c125c0b14b33aa5347b5c8ac1093fe2a1823304c5b7a260a04d9267497c7834
+  languageName: node
+  linkType: hard
+
 "@popperjs/core@npm:^2.9.3":
   version: 2.11.5
   resolution: "@popperjs/core@npm:2.11.5"
@@ -4141,6 +4253,8 @@ __metadata:
     "@chakra-ui/react": ^2.1.2
     "@emotion/react": ^11.9.0
     "@emotion/styled": ^11.8.1
+    "@objectiv/tracker-react": ^0.0.19
+    "@objectiv/transport-debug": ^0.0.19
     "@types/react": ^18.0.10
     "@types/react-dom": ^18.0.5
     "@typescript-eslint/eslint-plugin": ^5.27.0
@@ -4432,6 +4546,15 @@ __metadata:
   version: 1.0.2
   resolution: "util-deprecate@npm:1.0.2"
   checksum: 474acf1146cb2701fe3b074892217553dfcf9a031280919ba1b8d651a068c9b15d863b7303cb15bd00a862b498e6cf4ad7b4a08fb134edd5a6f7641681cb54a2
+  languageName: node
+  linkType: hard
+
+"uuid@npm:^8.3.2":
+  version: 8.3.2
+  resolution: "uuid@npm:8.3.2"
+  bin:
+    uuid: dist/bin/uuid
+  checksum: 5575a8a75c13120e2f10e6ddc801b2c7ed7d8f3c8ac22c7ed0c7b2ba6383ec0abda88c905085d630e251719e0777045ae3236f04c812184b7c765f63a70e58df
   languageName: node
   linkType: hard
 

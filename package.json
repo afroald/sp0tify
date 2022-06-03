@@ -12,6 +12,8 @@
     "@chakra-ui/react": "^2.1.2",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
+    "@objectiv/tracker-react": "^0.0.19",
+    "@objectiv/transport-debug": "^0.0.19",
     "base64-js": "^1.5.1",
     "classnames": "^2.3.1",
     "framer-motion": "^6.3.7",
