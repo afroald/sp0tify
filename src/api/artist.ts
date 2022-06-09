@@ -177,7 +177,7 @@ interface ApiArtistsAlbumsResponse {
   total: number;
 }
 
-const fetchArtistsAlbums = async ({
+const fetchArtistAlbums = async ({
   token,
   artistId,
   groups = ['album', 'single'],
@@ -198,12 +198,12 @@ const fetchArtistsAlbums = async ({
   return [
     ...response.items,
     ...(response.next
-      ? await fetchArtistsAlbums({ token, artistId, offset: offset + 50 })
+      ? await fetchArtistAlbums({ token, artistId, offset: offset + 50 })
       : []),
   ];
 };
 
-export const useArtistsAlbums = ({
+export const useArtistAlbums = ({
   artistId,
 }: {
   artistId: string;
@@ -218,7 +218,7 @@ export const useArtistsAlbums = ({
   useEffect(() => {
     setIsPending(true);
     getAccessToken()
-      .then((token) => fetchArtistsAlbums({ token, artistId }))
+      .then((token) => fetchArtistAlbums({ token, artistId }))
       .then((albums) => {
         setResult(albums);
       })

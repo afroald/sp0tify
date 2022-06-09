@@ -1,5 +1,5 @@
 import { Center, Spinner } from '@chakra-ui/react';
-import { useArtist, useArtistsAlbums } from '../api/artist';
+import { useArtist, useArtistAlbums } from '../api/artist';
 import { Album } from './album';
 
 interface ArtistAlbumsProps {
@@ -8,7 +8,7 @@ interface ArtistAlbumsProps {
 
 export const ArtistAlbums = ({ artistId }: ArtistAlbumsProps) => {
   const [artist, artistIsPending, artistError] = useArtist({ artistId });
-  const [albums, albumsIsPending, AlbumsError] = useArtistsAlbums({ artistId });
+  const [albums, albumsIsPending, AlbumsError] = useArtistAlbums({ artistId });
 
   const sortedAlbums =
     albums?.sort(
