@@ -1,4 +1,9 @@
 import { Link, List, ListItem } from '@chakra-ui/react';
+import {
+  ContentContextWrapper,
+  LinkContextWrapper,
+  trackPressEvent,
+} from '@objectiv/tracker-react';
 import classnames from 'classnames';
 import { Link as RouterLink } from 'react-router-dom';
 import { selectImage } from '../select-image';
@@ -18,34 +23,44 @@ interface ArtistListProps {
 }
 
 export const ArtistList = ({ artists, selectedArtistId }: ArtistListProps) => (
-  <List>
-    {artists
-      .sort((a, b) => a.name.localeCompare(b.name))
-      .map((artist) => {
-        const image = selectImage(artist.images, { width: 80 });
-        return (
-          <ListItem key={artist.id}>
-            <Link
-              as={RouterLink}
-              to={`/artists/${artist.id}`}
-              className={classnames({
-                [classes['artist-link']]: true,
-                [classes['artist-link-selected']]:
-                  artist.id === selectedArtistId,
-              })}
-            >
-              <img
-                className={classes['artist-image']}
-                src={image?.url}
-                width="40"
-                height="40"
-                alt=""
-                loading="lazy"
-              />
-              {artist.name}
-            </Link>
-          </ListItem>
-        );
-      })}
-  </List>
+  <ContentContextWrapper id="artist-list">
+    <List>
+      {artists
+        .sort((a, b) => a.name.localeCompare(b.name))
+        .map((artist) => {
+          const image = selectImage(artist.images, { width: 80 });
+          return (
+            <ListItem key={artist.id}>
+              <LinkContextWrapper
+                id={`artist-${artist.id}`}
+                href={`/artists/${artist.id}`}
+              >
+                {(trackingContext) => (
+                  <Link
+                    as={RouterLink}
+                    to={`/artists/${artist.id}`}
+                    className={classnames({
+                      [classes['artist-link']]: true,
+                      [classes['artist-link-selected']]:
+                        artist.id === selectedArtistId,
+                    })}
+                    onClick={() => trackPressEvent(trackingContext)}
+                  >
+                    <img
+                      className={classes['artist-image']}
+                      src={image?.url}
+                      width="40"
+                      height="40"
+                      alt=""
+                      loading="lazy"
+                    />
+                    {artist.name}
+                  </Link>
+                )}
+              </LinkContextWrapper>
+            </ListItem>
+          );
+        })}
+    </List>
+  </ContentContextWrapper>
 );
