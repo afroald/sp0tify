@@ -1,13 +1,30 @@
 .now-playing-bar {
   display: flex;
+  flex-direction: row;
   align-items: center;
+  justify-content: space-between;
   height: 90px;
   padding: 0 16px;
   background-color: #181818;
   border-top: 1px solid #282828;
 }
 
-.center {
+.left-column {
+  min-width: 180px;
+  width: 30%;
+}
+
+.middle-column {
+  max-width: 722px;
+  width: 40%;
+}
+
+.right-column {
+  min-width: 180px;
+  width: 30%;
+}
+
+.controls {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -25,7 +42,6 @@
 }
 
 .now-playing {
-  flex-grow: 1;
   display: flex;
 }
 

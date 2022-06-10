@@ -15,33 +15,36 @@ export const NowPlayingBar = () => {
 
   return (
     <div className={classes['now-playing-bar']}>
-      <div style={{ flexGrow: 1 }} className={classes['now-playing']}>
-        {currentTrack ? (
-          <>
-            <div>
-              <img
-                className={classes['now-playing-cover-art']}
-                width="56"
-                height="56"
-                alt=""
-                src={
-                  selectImage(currentTrack.album.images, { width: 56 * 2 })?.url
-                }
-                loading="lazy"
-              />
-            </div>
-            <div className={classes['now-playing-info']}>
-              <div className={classes['now-playing-track']}>
-                {currentTrack.name}
+      <div className={classes['left-column']}>
+        <div style={{ flexGrow: 1 }} className={classes['now-playing']}>
+          {currentTrack ? (
+            <>
+              <div>
+                <img
+                  className={classes['now-playing-cover-art']}
+                  width="56"
+                  height="56"
+                  alt=""
+                  src={
+                    selectImage(currentTrack.album.images, { width: 56 * 2 })
+                      ?.url
+                  }
+                  loading="lazy"
+                />
               </div>
-              <div className={classes['now-playing-artists']}>
-                {currentTrack.artists.map((artist) => artist.name).join(', ')}
+              <div className={classes['now-playing-info']}>
+                <div className={classes['now-playing-track']}>
+                  {currentTrack.name}
+                </div>
+                <div className={classes['now-playing-artists']}>
+                  {currentTrack.artists.map((artist) => artist.name).join(', ')}
+                </div>
               </div>
-            </div>
-          </>
-        ) : null}
+            </>
+          ) : null}
+        </div>
       </div>
-      <div className={classes['center']}>
+      <div className={classes['controls']}>
         <div className={classes['control-buttons']}>
           <SkipBackButton />
           <PlayPauseButton
@@ -56,7 +59,7 @@ export const NowPlayingBar = () => {
           duration={currentTrack?.duration_ms}
         />
       </div>
-      <div style={{ flexGrow: 1 }}></div>
+      <div className={classes['right-column']}></div>
     </div>
   );
 };
