@@ -27,6 +27,7 @@ export const NowPlayingBar = () => {
                 src={
                   selectImage(currentTrack.album.images, { width: 56 * 2 })?.url
                 }
+                loading="lazy"
               />
             </div>
             <div className={classes['now-playing-info']}>

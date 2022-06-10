@@ -41,6 +41,7 @@ export const Album = ({ album }: AlbumProps) => {
             width="136"
             height="136"
             alt=""
+            loading="lazy"
           />
         </div>
         <div>
