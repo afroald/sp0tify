@@ -1,10 +1,18 @@
-import { Outlet } from 'react-router-dom';
-import { MainLayout } from './layout/main-layout';
-import { NowPlayingBar } from './playback/now-playing-bar';
-import { SideBar } from './side-bar/side-bar';
+import { Box } from '@chakra-ui/react';
+import { useState } from 'react';
+import { Slider } from './slider';
 
-export const Index = () => (
-  <MainLayout sideBar={<SideBar />} bottomBar={<NowPlayingBar />}>
-    <Outlet />
-  </MainLayout>
-);
+export const Index = () => {
+  const [value, setValue] = useState(0);
+  return (
+    <Box width={400} marginTop={20} marginLeft={20}>
+      <Slider
+        min={0}
+        max={100}
+        value={value}
+        onChange={(value) => setValue(value)}
+        isDisabled={true}
+      />
+    </Box>
+  );
+};

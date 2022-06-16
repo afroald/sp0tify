@@ -20,6 +20,9 @@
 }
 
 .right-column {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
   min-width: 180px;
   width: 30%;
 }

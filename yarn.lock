@@ -4256,16 +4256,16 @@ __metadata:
     react: ^18.1.0
     react-dom: ^18.1.0
     react-router-dom: ^6.3.0
-    spotify-web-playback-ts: ^0.0.2
+    spotify-web-playback-ts: "https://github.com/afroald/spotify-web-playback-ts.git"
     typescript: ^4.7.3
     vite: ^2.9.11
   languageName: unknown
   linkType: soft
 
-"spotify-web-playback-ts@npm:^0.0.2":
-  version: 0.0.2
-  resolution: "spotify-web-playback-ts@npm:0.0.2"
-  checksum: 6515341a3f4463db438370a5a5379c2fd098aa3b6226b2b8ebc72847e446992bcbda7033f4bab0ed1ecf27b92d378d140715aa9190e5fd2c4d8393b0743eda2f
+"spotify-web-playback-ts@https://github.com/afroald/spotify-web-playback-ts.git":
+  version: 0.0.1
+  resolution: "spotify-web-playback-ts@https://github.com/afroald/spotify-web-playback-ts.git#commit=b2e448a862acd30d87f2efdb7ac61c78e3487653"
+  checksum: 78c4e01bc692918faf6e6c28cd256aca66b377d1e818e3d9923ede04dc52699f47bd6da5f433d66f869d0623fae58cab1362eb82ce30e2dfa781a8ae54b6c72b
   languageName: node
   linkType: hard
 

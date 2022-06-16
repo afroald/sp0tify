@@ -1,14 +1,15 @@
+import { useTrack } from '../api/track';
+import { selectImage } from '../select-image';
 import { PlayPauseButton } from './buttons/play-pause-button';
 import { SkipBackButton } from './buttons/skip-back-button';
 import { SkipForwardButton } from './buttons/skip-forward-button';
 import classes from './now-playing-bar.module.css';
 import { PlaybackBar } from './playback-bar/playback-bar';
 import { usePlaybackContext } from './playback-context';
-import { useTrack } from '../api/track';
-import { selectImage } from '../select-image';
+import { VolumeControl } from './volume-control';
 
 export const NowPlayingBar = () => {
-  const { state, togglePlay } = usePlaybackContext();
+  const { state, volume, togglePlay, setVolume, seek } = usePlaybackContext();
   const [currentTrack] = useTrack({
     id: state?.track_window.current_track.id ?? null,
   });
@@ -57,9 +58,19 @@ export const NowPlayingBar = () => {
         <PlaybackBar
           position={state?.position}
           duration={currentTrack?.duration_ms}
+          onSeek={(position) => {
+            console.log(position);
+            seek(position);
+          }}
         />
       </div>
-      <div className={classes['right-column']}></div>
+      <div className={classes['right-column']}>
+        <VolumeControl
+          isDisabled={volume === null}
+          volume={volume ?? 0}
+          onChange={(volume) => setVolume(volume)}
+        />
+      </div>
     </div>
   );
 };

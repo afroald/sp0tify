@@ -1,46 +1,43 @@
-.progress-bar {
+.slider {
   position: relative;
   width: 100%;
   height: 12px;
 }
 
-.progress-bar-background {
-  flex-grow: 1;
-  position: relative;
+.track {
   top: 50%;
   width: 100%;
   height: 4px;
   border-radius: 2px;
-  background-color: hsla(0,0%,100%,0.3);
-  overflow: hidden;
+  background-color: hsla(0, 0%, 100%, 0.3);
   transform: translateY(-50%);
 }
 
-.progress {
+.track-progress {
   width: 100%;
   height: 4px;
   border-radius: 2px;
   background-color: #fff;
-  transform: translateX(calc(-100% + var(--progress)));
 }
 
-.progress-bar:hover .progress {
+.slider:hover .track-progress,
+.slider[data-focused] .track-progress {
   background-color: rgb(29, 185, 84);
 }
 
-.cursor {
+.thumb {
   position: absolute;
   top: 50%;
-  left: var(--progress);
   display: none;
-  margin-left: -6px;
   width: 12px;
   height: 12px;
-  background-color: #fff;
+  margin-left: -6px;
   border-radius: 50%;
+  background-color: #fff;
   transform: translateY(-50%);
 }
 
-.progress-bar:hover .cursor {
+.slider:hover .thumb,
+.slider[data-focused] .thumb {
   display: block;
 }

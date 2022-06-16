@@ -33,8 +33,11 @@ async function requestPlay(
 interface PlaybackContextInterface {
   deviceId: SpotifyDeviceId | null;
   state: SpotifyPlayerState | null;
-  play: (uris: string[]) => void;
-  togglePlay: () => void;
+  volume: number | null;
+  play: (uris: string[]) => Promise<void>;
+  togglePlay: () => Promise<void>;
+  setVolume: (volume: number) => Promise<void>;
+  seek: (position: number) => Promise<void>;
 }
 
 const PlaybackContext = createContext<PlaybackContextInterface | null>(null);
@@ -63,6 +66,7 @@ export const PlaybackProvider = ({ children }: PlaybackProviderProps) => {
   const [playerState, setPlayerState] = useState<SpotifyPlayerState | null>(
     null,
   );
+  const [volume, setVolume] = useState<number | null>(null);
 
   useEffect(() => {
     if (connectingRef.current) {
@@ -124,10 +128,10 @@ export const PlaybackProvider = ({ children }: PlaybackProviderProps) => {
         return;
       }
 
-      player
-        .getCurrentState()
-        .then((state) => {
+      Promise.all([player.getCurrentState(), player.getVolume()])
+        .then(([state, volume]) => {
           setPlayerState(state);
+          setVolume(volume);
         })
         .finally(() => {
           timeoutId = setTimeout(update, timeout);
@@ -145,10 +149,10 @@ export const PlaybackProvider = ({ children }: PlaybackProviderProps) => {
     (uris: string[]) => {
       if (!deviceId) {
         console.warn('Cannot play uris because no device id is known');
-        return;
+        return Promise.reject('Cannot play uris because no device id is known');
       }
 
-      getAccessToken().then((token) => {
+      return getAccessToken().then((token) => {
         requestPlay(token, deviceId, uris);
       });
     },
@@ -157,20 +161,39 @@ export const PlaybackProvider = ({ children }: PlaybackProviderProps) => {
 
   const togglePlay = useCallback(() => {
     if (!playerRef.current) {
-      return;
+      return Promise.reject('Player not ready');
     }
 
     return playerRef.current.togglePlay();
+  }, []);
+
+  const setPlayerVolume = useCallback((volume: number) => {
+    if (!playerRef.current) {
+      return Promise.reject('Player not ready');
+    }
+
+    return playerRef.current.setVolume(volume);
+  }, []);
+
+  const seek = useCallback((position: number) => {
+    if (!playerRef.current) {
+      return Promise.reject('Player not ready');
+    }
+
+    return playerRef.current.seek(position);
   }, []);
 
   const value = useMemo(
     () => ({
       deviceId,
       state: playerState,
+      volume,
       play,
       togglePlay,
+      setVolume: setPlayerVolume,
+      seek,
     }),
-    [deviceId, playerState, play, togglePlay],
+    [deviceId, playerState, volume, play, togglePlay, setPlayerVolume, seek],
   );
 
   return (
