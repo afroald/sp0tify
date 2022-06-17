@@ -1,9 +1,7 @@
-import { Button } from '@chakra-ui/react';
 import { useAlbumTracks } from '../api/album';
+import { TrackList } from '../components/track-list';
 import { selectImage } from '../select-image';
 import classes from './album.module.css';
-import { usePlaybackContext } from '../playback/playback-context';
-import { TrackList } from './track-list';
 
 const timeIcon = (
   <svg role="img" height="16" width="16" viewBox="0 0 16 16">
@@ -28,7 +26,6 @@ interface AlbumProps {
 }
 
 export const Album = ({ album }: AlbumProps) => {
-  const { play } = usePlaybackContext();
   const releaseDate = new Date(album.release_date);
   const [tracks, isPending, error] = useAlbumTracks({ albumId: album.id });
 
@@ -58,50 +55,7 @@ export const Album = ({ album }: AlbumProps) => {
           </p>
         </div>
       </header>
-
       <TrackList tracks={tracks ?? []} total_tracks={album.total_tracks} />
-
-      {/* <table className={classes['tracks']}>
-        <thead>
-          <tr>
-            <td>#</td>
-            <td></td>
-            <td>Titel</td>
-            <td>{timeIcon}</td>
-          </tr>
-        </thead>
-        <tbody>
-          {isPending
-            ? tracksRange.map((i) => (
-                <tr key={i}>
-                  <td>{i}</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-              ))
-            : tracks?.map((track) => (
-                <tr key={track.id}>
-                  <td>{track.track_number}</td>
-                  <td>
-                    <Button
-                      size="xs"
-                      colorScheme="green"
-                      onClick={() => {
-                        const index = tracks.indexOf(track);
-                        const tracksToPlay = tracks.slice(index);
-                        play(tracksToPlay.map((track) => track.uri));
-                      }}
-                    >
-                      play
-                    </Button>
-                  </td>
-                  <td>{track.name}</td>
-                  <td>{track.duration_ms}</td>
-                </tr>
-              ))}
-        </tbody>
-      </table> */}
     </section>
   );
 };

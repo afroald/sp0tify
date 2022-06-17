@@ -10,14 +10,14 @@ interface TrackListProps {
       // href: string;
       // id: string;
       name: string;
-      type: 'artist';
+      // type: 'artist';
       // uri: string;
     }[];
     id: string;
-    track_number: number;
+    track_number?: number;
     name: string;
     uri: string;
-    type: 'track';
+    type: 'track' | 'episode' | 'ad';
   }[];
   total_tracks: number;
 }

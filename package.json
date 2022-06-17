@@ -21,7 +21,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.3.0",
-    "spotify-web-playback-ts": "https://github.com/afroald/spotify-web-playback-ts.git"
+    "spotify-web-playback-ts": "https://github.com/afroald/spotify-web-playback-ts.git#commit=2bc3ba0d1dd13ef413f5c5e38e76ea1a6b5e6ce2"
   },
   "devDependencies": {
     "@types/react": "^18.0.14",

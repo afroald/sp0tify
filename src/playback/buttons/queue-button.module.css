@@ -1,0 +1,32 @@
+.button {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  min-width: 32px;
+  height: 32px;
+  border: none;
+  color: rgb(167, 167, 167);
+}
+
+.button svg {
+  fill: currentcolor;
+}
+
+.button-active {
+  color: #1db954;
+}
+
+.button-active:after {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+  display: block;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: #1db954;
+  content: '';
+}
