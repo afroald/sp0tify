@@ -59,7 +59,6 @@ export const NowPlayingBar = () => {
           position={state?.position}
           duration={currentTrack?.duration_ms}
           onSeek={(position) => {
-            console.log(position);
             seek(position);
           }}
         />
