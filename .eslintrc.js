@@ -1,9 +1,5 @@
 module.exports = {
   parser: '@typescript-eslint/parser',
-  // parserOptions: {
-  //   project: './tsconfig.eslint.json',
-  //   sourceType: 'module',
-  // },
   plugins: ['@typescript-eslint/eslint-plugin', 'react-hooks'],
   extends: [
     'plugin:@typescript-eslint/recommended',
