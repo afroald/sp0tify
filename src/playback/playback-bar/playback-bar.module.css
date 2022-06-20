@@ -12,6 +12,7 @@
   min-width: 40px;
   font-size: 11px;
   color: rgb(167, 167, 167);
+  font-variant-numeric: tabular-nums;
 }
 
 .time-elapsed {

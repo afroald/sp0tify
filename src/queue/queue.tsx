@@ -1,7 +1,15 @@
 import { Box, List, ListItem } from '@chakra-ui/react';
 import { ContentContextWrapper } from '@objectiv/tracker-react';
-import { TrackList } from '../components/track-list';
+import { TrackList, TrackListColumnType } from '../components/track-list';
 import { usePlaybackContext } from '../playback/playback-context';
+
+const TRACK_LIST_COLUMNS = [
+  TrackListColumnType.TrackNumber,
+  TrackListColumnType.AlbumCover,
+  TrackListColumnType.Title,
+  TrackListColumnType.Album,
+  TrackListColumnType.Duration,
+];
 
 export const Queue = () => {
   const { state } = usePlaybackContext();
@@ -15,6 +23,8 @@ export const Queue = () => {
         <h1>Wachtrij</h1>
         <h2>Wordt nu afgespeeld</h2>
         <TrackList
+          showHeader={false}
+          columns={TRACK_LIST_COLUMNS}
           tracks={nowPlayingTracks}
           total_tracks={nowPlayingTracks.length}
         />

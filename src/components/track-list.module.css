@@ -2,10 +2,25 @@
   list-style-type: none;
 }
 
+.header {
+  display: grid;
+  grid-gap: 16px;
+  grid-template-columns: [index] 16px [first] 4fr [var1] 2fr [last] minmax(120px,1fr);
+  height: 36px;
+  padding: 0 16px;
+  border-bottom: 1px solid rgba(255,255,255,.1);
+  color: #b3b3b3;
+  text-transform: uppercase;
+}
+
+.header svg {
+  fill: currentcolor;
+}
+
 .row {
   display: grid;
   grid-gap: 16px;
-  grid-template-columns: [index] 16px [first] 4fr [last] minmax(120px,1fr);
+  grid-template-columns: [index] 16px [first] 4fr [var1] 2fr [last] minmax(120px,1fr);
   height: 56px;
   padding: 0 16px;
   border-radius: 4px;
@@ -21,16 +36,50 @@
   background-color: rgba(255,255,255,.3);
 }
 
-.column-1 {
+.track-number-column {
   display: flex;
   align-items: center;
   justify-self: end;
 }
 
-.column-2 {
+.title-column {
   justify-self: start;
   display: flex;
   align-items: center;
+}
+
+.title-column-header {
+  font-size: 12px;
+}
+
+.album-column {
+  justify-self: start;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: rgb(167, 167, 167);
+}
+
+.album-column-header {
+  font-size: 12px;
+}
+
+.duration-column {
+  grid-column: last;
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  color: rgb(167, 167, 167);
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+
+.album-cover-and-track-info {
+  display: flex;
+}
+
+.album-cover {
+  margin-right: 16px;
 }
 
 .track-name-and-artists {

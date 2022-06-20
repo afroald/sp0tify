@@ -1,4 +1,4 @@
-import { Center, Spinner } from '@chakra-ui/react';
+import { Box, Center, Heading, Spinner } from '@chakra-ui/react';
 import { useArtist, useArtistAlbums } from '../api/artist';
 import { Album } from './album';
 
@@ -28,11 +28,15 @@ export const ArtistAlbums = ({ artistId }: ArtistAlbumsProps) => {
   }
 
   return (
-    <div>
-      <h1>{artist?.name}</h1>
+    <>
+      <Box padding="32px">
+        <Heading as="h1" size="md">
+          {artist?.name}
+        </Heading>
+      </Box>
       {sortedAlbums?.map((album) => (
         <Album key={album.id} album={album} />
       ))}
-    </div>
+    </>
   );
 };

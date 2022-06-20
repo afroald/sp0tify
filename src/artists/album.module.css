@@ -1,9 +1,27 @@
+.album {
+  background: linear-gradient(#181818,#121212);
+}
+
 .header {
   display: flex;
   flex-direction: row;
+  padding: 32px;
+}
+
+.header-column-2 {
+  display: flex;
+  flex-direction: column;
+  margin-left: 24px;
+}
+
+.header-album-information {
+  color: #b3b3b3;
+  font-size: 14px;
 }
 
 .tracks {
+  padding: 0 32px;
+  margin-bottom: 32px;
   width: 100%;
 }
 
