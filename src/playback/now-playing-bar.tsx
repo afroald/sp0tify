@@ -1,3 +1,5 @@
+import { Link } from '@chakra-ui/react';
+import { Link as RouterLink } from 'react-router-dom';
 import { useTrack } from '../api/track';
 import { selectImage } from '../select-image';
 import { PlayPauseButton } from './buttons/play-pause-button';
@@ -39,7 +41,18 @@ export const NowPlayingBar = () => {
                   {currentTrack.name}
                 </div>
                 <div className={classes['now-playing-artists']}>
-                  {currentTrack.artists.map((artist) => artist.name).join(', ')}
+                  {currentTrack.artists.map((artist, index) => (
+                    <>
+                      {index > 0 ? ', ' : null}
+                      <Link
+                        as={RouterLink}
+                        to={`/artists/${artist.id}`}
+                        key={artist.id}
+                      >
+                        {artist.name}
+                      </Link>
+                    </>
+                  ))}
                 </div>
               </div>
             </>
