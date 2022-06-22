@@ -74,13 +74,13 @@ export const TrackList = ({
 
   const handleDoubleClick = useCallback(
     (trackId: string) => {
-      const track = tracks.find((track) => track.id === trackId);
+      const index = tracks.findIndex((track) => track.id === trackId);
 
-      if (!track) {
+      if (index < 0) {
         return;
       }
 
-      playback.play([track.uri]);
+      playback.play(tracks.slice(index).map((track) => track.uri));
     },
     [playback, tracks],
   );
