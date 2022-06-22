@@ -3,7 +3,6 @@ import { Link as RouterLink } from 'react-router-dom';
 import { useTrack } from '../api/track';
 import { selectImage } from '../select-image';
 import { PlayPauseButton } from './buttons/play-pause-button';
-import { QueueButton } from './buttons/queue-button';
 import { SkipBackButton } from './buttons/skip-back-button';
 import { SkipForwardButton } from './buttons/skip-forward-button';
 import classes from './now-playing-bar.module.css';
@@ -78,7 +77,6 @@ export const NowPlayingBar = () => {
         />
       </div>
       <div className={classes['right-column']}>
-        <QueueButton />
         <VolumeControl
           isDisabled={volume === null}
           volume={volume ?? 0}

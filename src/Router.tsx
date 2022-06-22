@@ -4,7 +4,6 @@ import { RequireAuth } from './authorization/authorization-context';
 import { Index } from './index';
 import { Login, LoginCallback } from './login';
 import { Page } from './page';
-import { Queue } from './queue/queue';
 
 export const Router = () => (
   <BrowserRouter>
@@ -15,7 +14,6 @@ export const Router = () => (
         <Route element={<Page />}>
           <Route path="/artists/:artistId" element={<ArtistBrowser />} />
           <Route path="/artists" element={<ArtistBrowser />} />
-          <Route path="/queue" element={<Queue />} />
           <Route path="/" element={<Index />} />
         </Route>
       </Route>
