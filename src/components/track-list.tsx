@@ -1,3 +1,4 @@
+import { Link } from '@chakra-ui/react';
 import classnames from 'classnames';
 import prettyMilliseconds from 'pretty-ms';
 import { useCallback, useMemo, useState } from 'react';
@@ -5,6 +6,8 @@ import { ImageCollection } from '../api/image';
 import { usePlaybackContext } from '../playback/playback-context';
 import { selectImage } from '../select-image';
 import classes from './track-list.module.css';
+import { Link as RouterLink } from 'react-router-dom';
+import { OverflowEllipsis } from './overflow-ellipsis';
 
 const timeIcon = (
   <svg role="img" height="16" width="16" viewBox="0 0 16 16">
@@ -28,7 +31,7 @@ interface TrackListProps {
     artists: {
       // external_urls: Record<string, string>;
       // href: string;
-      // id: string;
+      id: string;
       name: string;
       // type: 'artist';
       // uri: string;
@@ -153,12 +156,22 @@ export const TrackList = ({
                         ) : null}
                         <div className={classes['track-name-and-artists']}>
                           <div className={classes['track-name']}>
-                            {track.name}
+                            <OverflowEllipsis>{track.name}</OverflowEllipsis>
                           </div>
                           <div className={classes['artists']}>
-                            {track.artists
-                              .map((artist) => artist.name)
-                              .join(', ')}
+                            <OverflowEllipsis>
+                              {track.artists.map((artist, index) => (
+                                <span key={artist.id}>
+                                  {index > 0 ? ', ' : null}
+                                  <Link
+                                    as={RouterLink}
+                                    to={`/artists/${artist.id}`}
+                                  >
+                                    {artist.name}
+                                  </Link>
+                                </span>
+                              ))}
+                            </OverflowEllipsis>
                           </div>
                         </div>
                       </div>
