@@ -131,6 +131,9 @@ export const TrackList = ({
                   className={classnames({
                     [classes['row']]: true,
                     [classes['row-selected']]: track.id === selectedTrack,
+                    [classes['row-playing']]:
+                      playback.state?.track_window.current_track.id ===
+                      track.id,
                   })}
                   onClick={() => handleClick(track.id)}
                   onDoubleClick={() => handleDoubleClick(track.id)}

@@ -97,6 +97,10 @@
   line-height: 1.5;
 }
 
+.row-playing .track-name {
+  color: #1db954;
+}
+
 .artists {
   grid-area: subtitle;
   grid-column-start: badges;
