@@ -1,4 +1,8 @@
 import {
+  useMediaPauseEventTracker,
+  useMediaStartEventTracker,
+} from '@objectiv/tracker-react';
+import {
   createContext,
   ReactNode,
   useCallback,
@@ -38,6 +42,8 @@ interface PlaybackContextInterface {
   togglePlay: () => Promise<void>;
   setVolume: (volume: number) => Promise<void>;
   seek: (position: number) => Promise<void>;
+  previousTrack: () => Promise<void>;
+  nextTrack: () => Promise<void>;
 }
 
 const PlaybackContext = createContext<PlaybackContextInterface | null>(null);
@@ -67,6 +73,13 @@ export const PlaybackProvider = ({ children }: PlaybackProviderProps) => {
     null,
   );
   const [volume, setVolume] = useState<number | null>(null);
+
+  const trackStart = useMediaStartEventTracker({
+    locationStack: [],
+  });
+  const trackPause = useMediaPauseEventTracker({
+    locationStack: [],
+  });
 
   useEffect(() => {
     if (connectingRef.current) {
@@ -145,6 +158,8 @@ export const PlaybackProvider = ({ children }: PlaybackProviderProps) => {
     };
   }, [deviceId]);
 
+  useTrackPlayback({ state: playerState, trackStart, trackPause });
+
   const play = useCallback(
     (uris: string[]) => {
       if (!deviceId) {
@@ -183,6 +198,22 @@ export const PlaybackProvider = ({ children }: PlaybackProviderProps) => {
     return playerRef.current.seek(position);
   }, []);
 
+  const previousTrack = useCallback(() => {
+    if (!playerRef.current) {
+      return Promise.reject('Player not ready');
+    }
+
+    return playerRef.current.previousTrack();
+  }, []);
+
+  const nextTrack = useCallback(() => {
+    if (!playerRef.current) {
+      return Promise.reject('Player not ready');
+    }
+
+    return playerRef.current.nextTrack();
+  }, []);
+
   const value = useMemo(
     () => ({
       deviceId,
@@ -192,8 +223,20 @@ export const PlaybackProvider = ({ children }: PlaybackProviderProps) => {
       togglePlay,
       setVolume: setPlayerVolume,
       seek,
+      previousTrack,
+      nextTrack,
     }),
-    [deviceId, playerState, volume, play, togglePlay, setPlayerVolume, seek],
+    [
+      deviceId,
+      playerState,
+      volume,
+      play,
+      togglePlay,
+      setPlayerVolume,
+      seek,
+      previousTrack,
+      nextTrack,
+    ],
   );
 
   return (
@@ -201,4 +244,52 @@ export const PlaybackProvider = ({ children }: PlaybackProviderProps) => {
       {children}
     </PlaybackContext.Provider>
   );
+};
+
+interface TrackedState {
+  trackId: string | null;
+  paused: boolean;
+}
+
+const useTrackPlayback = ({
+  state,
+  trackStart,
+  trackPause,
+}: {
+  state: SpotifyPlayerState | null;
+  trackStart: () => void;
+  trackPause: () => void;
+}) => {
+  const trackedStateRef = useRef<TrackedState>({
+    trackId: null,
+    paused: true,
+  });
+
+  const update = useCallback(() => {
+    if (!state) {
+      return;
+    }
+
+    trackedStateRef.current.trackId = state.track_window.current_track.id;
+    trackedStateRef.current.paused = state.paused;
+  }, [state]);
+
+  useEffect(() => {
+    if (!state) {
+      return;
+    }
+
+    if (
+      trackedStateRef.current.trackId !== state.track_window.current_track.id ||
+      trackedStateRef.current.paused !== state.paused
+    ) {
+      if (state.paused) {
+        trackPause();
+      } else {
+        trackStart();
+      }
+    }
+
+    update();
+  }, [state, trackStart, trackPause, update]);
 };

@@ -11,7 +11,15 @@ import { usePlaybackContext } from './playback-context';
 import { VolumeControl } from './volume-control';
 
 export const NowPlayingBar = () => {
-  const { state, volume, togglePlay, setVolume, seek } = usePlaybackContext();
+  const {
+    state,
+    volume,
+    togglePlay,
+    setVolume,
+    seek,
+    previousTrack,
+    nextTrack,
+  } = usePlaybackContext();
   const [currentTrack] = useTrack({
     id: state?.track_window.current_track.id ?? null,
   });
@@ -41,16 +49,12 @@ export const NowPlayingBar = () => {
                 </div>
                 <div className={classes['now-playing-artists']}>
                   {currentTrack.artists.map((artist, index) => (
-                    <>
+                    <span key={artist.id}>
                       {index > 0 ? ', ' : null}
-                      <Link
-                        as={RouterLink}
-                        to={`/artists/${artist.id}`}
-                        key={artist.id}
-                      >
+                      <Link as={RouterLink} to={`/artists/${artist.id}`}>
                         {artist.name}
                       </Link>
-                    </>
+                    </span>
                   ))}
                 </div>
               </div>
@@ -60,13 +64,21 @@ export const NowPlayingBar = () => {
       </div>
       <div className={classes['controls']}>
         <div className={classes['control-buttons']}>
-          <SkipBackButton />
+          <SkipBackButton
+            onClick={() => {
+              previousTrack();
+            }}
+          />
           <PlayPauseButton
             paused={state?.paused ?? true}
             disabled={state === null}
             onClick={togglePlay}
           />
-          <SkipForwardButton />
+          <SkipForwardButton
+            onClick={() => {
+              nextTrack();
+            }}
+          />
         </div>
         <PlaybackBar
           position={state?.position}
