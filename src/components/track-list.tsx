@@ -1,4 +1,4 @@
-import { Link } from '@chakra-ui/react';
+import { Link, Skeleton } from '@chakra-ui/react';
 import classnames from 'classnames';
 import prettyMilliseconds from 'pretty-ms';
 import { useCallback, useMemo, useState } from 'react';
@@ -197,7 +197,18 @@ export const TrackList = ({
               </li>
             ))
           : tracksRange.map((index) => (
-              <li key={index}>{index} placeholder</li>
+              <li key={index} className={classes['track-list-item']}>
+                <div className={classes['row']}>
+                  {columns.includes(TrackListColumnType.TrackNumber) ? (
+                    <div className={classes['track-number-column']}>
+                      {index}
+                    </div>
+                  ) : null}
+                  <div className={classes['skeleton']}>
+                    <Skeleton height="20px" />
+                  </div>
+                </div>
+              </li>
             ))}
       </ol>
     </section>
