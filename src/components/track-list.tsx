@@ -205,7 +205,11 @@ export const TrackList = ({
                     </div>
                   ) : null}
                   <div className={classes['skeleton']}>
-                    <Skeleton height="20px" />
+                    <Skeleton
+                      height="20px"
+                      startColor="rgba(255,255,255,.1)"
+                      endColor="rgba(255,255,255,.3)"
+                    />
                   </div>
                 </div>
               </li>
